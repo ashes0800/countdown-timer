@@ -203,7 +203,37 @@ function initCanvas() {
     window.addEventListener('resize', () => {
         fireworksCanvas.width = window.innerWidth;
         fireworksCanvas.height = window.innerHeight;
+        // Reset Pokemon positions on resize
+        if (pokemonCharacters.length > 0) {
+            pokemonCharacters.forEach((pokemon, index) => {
+                pokemon.updatePosition(index);
+            });
+        }
     });
+}
+
+// Helper function to get responsive scale factor
+function getScaleFactor() {
+    const width = window.innerWidth;
+    if (width <= 480) return 0.4; // Extra small phones
+    if (width <= 768) return 0.5; // Phones
+    if (width <= 1024) return 0.75; // Tablets
+    return 1; // Desktop
+}
+
+// Helper function to get responsive Pokemon size
+function getResponsivePokemonSize() {
+    return 270 * getScaleFactor();
+}
+
+// Helper function to get responsive spacing
+function getResponsiveSpacing() {
+    return 360 * getScaleFactor();
+}
+
+// Helper function to get responsive particle count
+function getResponsiveParticleCount(baseCount) {
+    return Math.floor(baseCount * getScaleFactor());
 }
 
 class Confetti {
@@ -315,11 +345,11 @@ class Balloon {
 }
 
 class Pokemon {
-    constructor(type, x) {
+    constructor(type, centerX, offsetIndex) {
         this.type = type; // 'pikachu', 'charizard', or 'venusaur'
-        this.x = x;
-        this.y = fireworksCanvas.height * 0.75; // Lower position
-        this.size = 270; // 50% larger again
+        this.centerX = centerX;
+        this.offsetIndex = offsetIndex; // -1, 0, or 1 for left, center, right
+        this.updatePosition(offsetIndex);
         this.bounce = 0;
         this.bounceSpeed = 0.1;
         this.rotation = 0;
@@ -332,6 +362,13 @@ class Pokemon {
         this.image.onload = () => {
             this.imageLoaded = true;
         };
+    }
+    
+    updatePosition(offsetIndex) {
+        this.size = getResponsivePokemonSize();
+        const spacing = getResponsiveSpacing();
+        this.x = fireworksCanvas.width / 2 + (offsetIndex * spacing);
+        this.y = fireworksCanvas.height * 0.75;
     }
     
     update() {
@@ -497,7 +534,7 @@ class Glitter {
 }
 
 function createExplosion(x, y, type, baseColor) {
-    const particleCount = 150; // Increased by 50%
+    const particleCount = getResponsiveParticleCount(150); // Responsive particle count
     
     switch(type) {
         case 'ring':
@@ -557,8 +594,9 @@ function createExplosion(x, y, type, baseColor) {
             }
     }
     
-    // Add glitter to explosion
-    for (let i = 0; i < 225; i++) {
+    // Add glitter to explosion (responsive)
+    const glitterCount = getResponsiveParticleCount(225);
+    for (let i = 0; i < glitterCount; i++) {
         const angle = Math.random() * Math.PI * 2;
         const distance = Math.random() * 30;
         const glitter = new Glitter(
@@ -572,28 +610,31 @@ function createExplosion(x, y, type, baseColor) {
 function launchCelebration() {
     initCanvas();
     
-    // Create dancing Pokemon characters
+    // Create dancing Pokemon characters with responsive positioning
     const centerX = fireworksCanvas.width / 2;
     pokemonCharacters = [
-        new Pokemon('pikachu', centerX - 360),
-        new Pokemon('charizard', centerX),
-        new Pokemon('venusaur', centerX + 360)
+        new Pokemon('pikachu', centerX, -1),
+        new Pokemon('charizard', centerX, 0),
+        new Pokemon('venusaur', centerX, 1)
     ];
     
-    // Create initial confetti burst (optimized)
-    for (let i = 0; i < 120; i++) {
+    // Create initial confetti burst (responsive)
+    const confettiCount = getResponsiveParticleCount(120);
+    for (let i = 0; i < confettiCount; i++) {
         confettiParticles.push(new Confetti());
     }
     
-    // Create balloons (optimized)
-    for (let i = 0; i < 12; i++) {
+    // Create balloons (responsive)
+    const balloonCount = getResponsiveParticleCount(12);
+    for (let i = 0; i < balloonCount; i++) {
         setTimeout(() => {
             confettiParticles.push(new Balloon());
         }, i * 500);
     }
     
-    // Launch initial fireworks barrage (optimized)
-    for (let i = 0; i < 9; i++) {
+    // Launch initial fireworks barrage (responsive)
+    const initialFireworks = getResponsiveParticleCount(9);
+    for (let i = 0; i < initialFireworks; i++) {
         setTimeout(() => {
             const x = Math.random() * fireworksCanvas.width;
             fireworksParticles.push(new Firework(x, fireworksCanvas.height, true));
@@ -602,17 +643,19 @@ function launchCelebration() {
     
     // Continue launching FREQUENT fireworks like New Year's
     const fireworkInterval = setInterval(() => {
-        // Multiple launches for intense celebration
-        const launches = Math.random() < 0.3 ? 2 : 1;
+        // Multiple launches for intense celebration (adjust for mobile)
+        const scaleFactor = getScaleFactor();
+        const launches = scaleFactor >= 0.75 && Math.random() < 0.3 ? 2 : 1;
         for (let i = 0; i < launches; i++) {
             const x = Math.random() * fireworksCanvas.width;
             fireworksParticles.push(new Firework(x, fireworksCanvas.height, true));
         }
     }, 350);
     
-    // Add confetti periodically (optimized)
+    // Add confetti periodically (responsive)
+    const periodicConfettiCount = getResponsiveParticleCount(15);
     const confettiInterval = setInterval(() => {
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < periodicConfettiCount; i++) {
             confettiParticles.push(new Confetti());
         }
     }, 800);

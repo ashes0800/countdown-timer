@@ -218,21 +218,214 @@ button:active {
     transition: opacity 2s;
 }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2rem;
-    }
-    
-    .time-box {
-        min-width: 80px;
+/* Tablet Styles (Samsung Tab S7+ and similar) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    body {
         padding: 15px;
     }
     
+    .container {
+        padding: 35px;
+        max-width: 700px;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 18px;
+    }
+    
+    .tab-btn {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+    
+    .time-box {
+        min-width: 100px;
+        padding: 20px;
+    }
+    
     .time {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
     .label {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .magnify {
+        font-size: 3.2rem !important;
+    }
+    
+    input[type="datetime-local"],
+    input[type="number"] {
+        width: 250px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Mobile Styles (Samsung S23 Ultra and similar smartphones) */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+    
+    .container {
+        padding: 25px 15px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .tabs {
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .tab-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        flex: 1;
+    }
+    
+    .input-section {
+        margin-bottom: 25px;
+        gap: 12px;
+    }
+    
+    label {
+        font-size: 1rem;
+    }
+    
+    input[type="datetime-local"],
+    input[type="number"] {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    button {
+        padding: 10px 30px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .countdown {
+        gap: 12px;
+    }
+    
+    .time-box {
+        min-width: 70px;
+        padding: 12px;
+        border-radius: 12px;
+    }
+    
+    .time {
+        font-size: 1.8rem;
+    }
+    
+    .label {
+        font-size: 0.75rem;
+        margin-top: 8px;
+    }
+    
+    .message {
+        margin-top: 20px;
+        font-size: 1.2rem;
+    }
+    
+    .magnify {
+        font-size: 2.2rem !important;
+        text-shadow: 0 0 15px #DC143C, 0 0 30px #8B0000, 0 0 45px #FF6347;
+        padding: 15px !important;
+    }
+}
+
+/* Extra Small Mobile Devices */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 12px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .tab-btn {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .countdown {
+        gap: 10px;
+    }
+    
+    .time-box {
+        min-width: 60px;
+        padding: 10px;
+    }
+    
+    .time {
+        font-size: 1.5rem;
+    }
+    
+    .label {
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .magnify {
+        font-size: 1.8rem !important;
+    }
+}
+
+/* Landscape orientation adjustments for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        max-width: 90%;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .input-section {
+        margin-bottom: 15px;
+        gap: 10px;
+    }
+    
+    .countdown {
+        gap: 10px;
+    }
+    
+    .time-box {
+        padding: 10px;
+        min-width: 60px;
+    }
+    
+    .time {
+        font-size: 1.5rem;
+    }
+    
+    .label {
+        font-size: 0.7rem;
+        margin-top: 5px;
+    }
+    
+    .magnify {
+        font-size: 2rem !important;
     }
 }
