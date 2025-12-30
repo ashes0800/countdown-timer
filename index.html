@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Countdown Timer</h1>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="date-tab">Date & Time</button>
+            <button class="tab-btn" data-tab="seconds-tab">Seconds</button>
+        </div>
+        
+        <div class="tab-content active" id="date-tab">
+            <div class="input-section">
+                <label for="target-date">Set Target Date & Time:</label>
+                <input type="datetime-local" id="target-date">
+                <button id="start-btn">Start Countdown</button>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="seconds-tab">
+            <div class="input-section">
+                <label for="seconds-input">Enter Seconds:</label>
+                <input type="number" id="seconds-input" min="1" placeholder="e.g., 60">
+                <button id="start-seconds-btn">Start Countdown</button>
+            </div>
+        </div>
+
+        <div class="countdown" id="countdown">
+            <div class="time-box">
+                <span class="time" id="days">00</span>
+                <span class="label">Days</span>
+            </div>
+            <div class="time-box">
+                <span class="time" id="hours">00</span>
+                <span class="label">Hours</span>
+            </div>
+            <div class="time-box">
+                <span class="time" id="minutes">00</span>
+                <span class="label">Minutes</span>
+            </div>
+            <div class="time-box">
+                <span class="time" id="seconds">00</span>
+                <span class="label">Seconds</span>
+            </div>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <canvas id="fireworks-canvas"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
