@@ -216,8 +216,9 @@ function initCanvas() {
 function getScaleFactor() {
     const width = window.innerWidth;
     if (width <= 480) return 0.4; // Extra small phones
-    if (width <= 768) return 0.5; // Phones
-    if (width <= 1024) return 0.75; // Tablets
+    if (width <= 768) return 0.5; // Phones (Samsung S23 Ultra)
+    if (width <= 1024) return 0.75; // Standard tablets
+    if (width <= 1800) return 0.95; // High-res tablets (Samsung Tab S7+ 1752x2800)
     return 1; // Desktop
 }
 

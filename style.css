@@ -218,7 +218,58 @@ button:active {
     transition: opacity 2s;
 }
 
-/* Tablet Styles (Samsung Tab S7+ and similar) */
+/* High-Resolution Tablets (Samsung Tab S7+ - 1752x2800 and similar) */
+@media (max-width: 1800px) and (min-width: 1025px) {
+    body {
+        padding: 25px;
+    }
+    
+    .container {
+        padding: 50px;
+        max-width: 900px;
+    }
+    
+    h1 {
+        font-size: 2.8rem;
+        margin-bottom: 25px;
+    }
+    
+    .tab-btn {
+        padding: 12px 35px;
+        font-size: 1.1rem;
+    }
+    
+    .time-box {
+        min-width: 140px;
+        padding: 30px;
+    }
+    
+    .time {
+        font-size: 3.2rem;
+    }
+    
+    .label {
+        font-size: 1.1rem;
+    }
+    
+    .magnify {
+        font-size: 4.5rem !important;
+    }
+    
+    input[type="datetime-local"],
+    input[type="number"] {
+        width: 320px;
+        font-size: 1.1rem;
+        padding: 14px 22px;
+    }
+    
+    button {
+        padding: 14px 50px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Standard Tablets (iPad, smaller Android tablets) */
 @media (max-width: 1024px) and (min-width: 769px) {
     body {
         padding: 15px;
