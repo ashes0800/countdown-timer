@@ -32,6 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.classList.add('active');
             document.getElementById(tabId).classList.add('active');
             
+            // Show all time boxes when switching tabs
+            document.getElementById('days').parentElement.style.display = 'block';
+            document.getElementById('hours').parentElement.style.display = 'block';
+            document.getElementById('minutes').parentElement.style.display = 'block';
+            document.getElementById('seconds').parentElement.style.display = 'block';
+            
             // Clear any existing countdown and message
             if (countdownInterval) {
                 clearInterval(countdownInterval);
@@ -68,6 +74,16 @@ function startCountdown() {
         return;
     }
     
+    // Show all time boxes
+    document.getElementById('days').parentElement.style.display = 'block';
+    document.getElementById('hours').parentElement.style.display = 'block';
+    document.getElementById('minutes').parentElement.style.display = 'block';
+    document.getElementById('seconds').parentElement.style.display = 'block';
+    
+    // Reset countdown layout
+    const countdown = document.getElementById('countdown');
+    countdown.style.justifyContent = 'center';
+    
     messageEl.textContent = '';
     
     // Clear any existing interval
@@ -90,6 +106,16 @@ function startCountdownFromSeconds() {
         messageEl.style.color = '#e74c3c';
         return;
     }
+    
+    // Hide days, hours, minutes boxes
+    document.getElementById('days').parentElement.style.display = 'none';
+    document.getElementById('hours').parentElement.style.display = 'none';
+    document.getElementById('minutes').parentElement.style.display = 'none';
+    
+    // Show only seconds box and center it
+    const countdown = document.getElementById('countdown');
+    countdown.style.justifyContent = 'center';
+    document.getElementById('seconds').parentElement.style.display = 'block';
     
     // Calculate target date from seconds
     const now = new Date().getTime();
@@ -164,6 +190,7 @@ function updateCountdown() {
 let fireworksCanvas, fireworksCtx;
 let confettiParticles = [];
 let fireworksParticles = [];
+let pokemonCharacters = [];
 let animationId;
 
 function initCanvas() {
@@ -284,6 +311,54 @@ class Balloon {
         
         fireworksCtx.restore();
         fireworksCtx.shadowBlur = 0;
+    }
+}
+
+class Pokemon {
+    constructor(type, x) {
+        this.type = type; // 'pikachu', 'charizard', or 'venusaur'
+        this.x = x;
+        this.y = fireworksCanvas.height * 0.75; // Lower position
+        this.size = 270; // 50% larger again
+        this.bounce = 0;
+        this.bounceSpeed = 0.1;
+        this.rotation = 0;
+        this.rotationSpeed = 0.05;
+        
+        // Load image
+        this.image = new Image();
+        this.image.src = `${type}.png`;
+        this.imageLoaded = false;
+        this.image.onload = () => {
+            this.imageLoaded = true;
+        };
+    }
+    
+    update() {
+        this.bounce += this.bounceSpeed;
+        this.rotation += this.rotationSpeed;
+    }
+    
+    draw() {
+        if (!this.imageLoaded) return;
+        
+        const bobY = Math.sin(this.bounce) * 20; // Bouncing motion
+        const tilt = Math.sin(this.rotation) * 0.15; // Slight tilting for dance effect
+        
+        fireworksCtx.save();
+        fireworksCtx.translate(this.x, this.y + bobY);
+        fireworksCtx.rotate(tilt);
+        
+        // Draw the Pokemon image
+        fireworksCtx.drawImage(
+            this.image,
+            -this.size / 2,
+            -this.size / 2,
+            this.size,
+            this.size
+        );
+        
+        fireworksCtx.restore();
     }
 }
 
@@ -497,6 +572,14 @@ function createExplosion(x, y, type, baseColor) {
 function launchCelebration() {
     initCanvas();
     
+    // Create dancing Pokemon characters
+    const centerX = fireworksCanvas.width / 2;
+    pokemonCharacters = [
+        new Pokemon('pikachu', centerX - 360),
+        new Pokemon('charizard', centerX),
+        new Pokemon('venusaur', centerX + 360)
+    ];
+    
     // Create initial confetti burst (optimized)
     for (let i = 0; i < 120; i++) {
         confettiParticles.push(new Confetti());
@@ -573,6 +656,12 @@ function animate() {
         const alive = firework.update();
         if (alive) firework.draw();
         return alive;
+    });
+    
+    // Update and draw dancing Pokemon
+    pokemonCharacters.forEach(pokemon => {
+        pokemon.update();
+        pokemon.draw();
     });
     
     animationId = requestAnimationFrame(animate);
